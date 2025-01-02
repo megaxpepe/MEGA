@@ -511,6 +511,6 @@ contract MEGA is ERC20 {
         string memory symbol,
         address vault
     ) ERC20(name, symbol) {
-        _mint(vault, 1e11 * 1e18);
+        _mint(vault, 2025e8 * 1e18);
     }
 }
