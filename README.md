@@ -1,5 +1,5 @@
 # MEGA
-A total 100B MEGA. Let's make ethereum great again.
+Vitalik said that what he loves most is not ETH, but our MEME currency. Let's make ethereum great again.
 
 # Token
 https://etherscan.io/token/
