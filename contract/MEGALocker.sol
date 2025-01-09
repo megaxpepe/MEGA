@@ -13,7 +13,7 @@ interface IERC20 {
     function transferFrom(address from, address to, uint256 amount) external returns (bool);
 }
 
-contract TokenLocker {
+contract MEGALocker {
     event TokenLockStart(address indexed beneficiary, address indexed token, uint256 startTime, uint256 lockTime);
     event Release(address indexed beneficiary, address indexed token, uint256 releaseTime, uint256 amount);
     IERC20 public immutable token;
