@@ -112,6 +112,48 @@
     .connect-button:hover {
       background-color: #d35400;
     } 
+    
+    .bar-chart {
+      padding: 20px;
+      width: 100%;
+      max-width: 600px;
+      height: 40px;
+      display: flex;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      overflow: hidden;
+      margin: 0 auto; /* Center horizontally */
+    }
+    
+    .staking {
+      background-color: #4caf50; /* Green */
+      width: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+    }
+    
+    .airdrop {
+      background-color: #2196f3; /* Blue */
+      width: 25%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+    }
+    
+    .liquidity {
+      background-color: #ff9800; /* Orange */
+      width: 25%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+    }    
   </style>
 </head>
 
@@ -119,6 +161,12 @@
   <div class="container">
     <h1>Make Ethereum Great Again</h1>
     <a href="https://app.uniswap.org/tokens/ethereum/0x78A3020A5B33920457D16c2c612A8EDEF22B62AF" class="button">Start Trading</a>
+  </div>
+
+  <div class="bar-chart">        
+    <div class="staking">Staking Rewards 50%</div>        
+    <div class="airdrop">Airdrop 25%</div>        
+    <div class="liquidity">Liquidity 25%</div>    
   </div>
 
   <section class="staking-section">
