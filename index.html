@@ -5,109 +5,112 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.jsdelivr.net/npm/web3/dist/web3.min.js"></script>
   <title>Make Ethereum Great Again</title>
   <style>
-    * {
+    body {
+      font-family: Arial, sans-serif;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: 'Arial', sans-serif;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      background: linear-gradient(to bottom right, #1e3c72, #2a5298);
-      color: #ffffff;
-      padding: 20px;
-      position: relative;
+      background-color: #f4f4f9;
     }
 
     .container {
       text-align: center;
-      padding: 40px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 15px;
-      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
-      width: 80%;
+      padding: 20px;
+      background-color: #2c3e50;
+      color: #ecf0f1;
     }
 
     .container h1 {
-      font-size: 2.5rem;
-      margin-bottom: 15px;
-      font-weight: bold;
-      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+      font-size: 2em;
+      margin: 0;
     }
 
-    .container p {
-      font-size: 1rem;
-      margin-bottom: 25px;
-      line-height: 1.6;
-      opacity: 0.9;
-    }
-
-    .button {
+    .container .button {
       display: inline-block;
-      padding: 12px 25px;
-      font-size: 1rem;
-      font-weight: bold;
-      color: #ffffff;
+      margin-top: 15px;
+      padding: 10px 20px;
+      background-color: #3498db;
+      color: #fff;
       text-decoration: none;
-      background: linear-gradient(to right, #ff7e5f, #feb47b);
-      border-radius: 50px;
-      transition: transform 0.2s, box-shadow 0.2s;
+      border-radius: 5px;
     }
 
-    .button:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 20px rgba(255, 126, 95, 0.4);
+    .staking-section {
+      padding: 20px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .staking-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .staking-item {
+      background-color: #ecf0f1;
+      padding: 20px;
+      border-radius: 5px;
+      text-align: center;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .staking-item h3 {
+      margin: 0 0 10px;
+      color: #2c3e50;
+    }
+
+    .staking-item button {
+      margin-top: 10px;
+      padding: 10px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .staking-item button:hover {
+      background-color: #2980b9;
     }
 
     .info {
-      position: relative;
-      bottom: 0;
-      margin-top: 20px;
-      display: flex;
-      flex-direction: row;
-      justify-content: center;
-      gap: 20px;
+      text-align: center;
+      padding: 20px;
+      background-color: #34495e;
+      color: #ecf0f1;
     }
 
     .info a {
-      width: 40px;
-      height: 40px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 50%;
-      color: #add8e6;
+      margin: 0 10px;
+      color: #ecf0f1;
       text-decoration: none;
-      font-size: 1.2rem;
-      transition: background 0.3s, transform 0.3s;
+      font-size: 1.5em;
     }
 
     .info a:hover {
-      background: rgba(255, 255, 255, 0.3);
-      transform: scale(1.1);
+      color: #1abc9c;
     }
 
-    @media (max-width: 600px) {
-      .container h1 {
-        font-size: 2rem;
-      }
+    .connect-button {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      background-color: #e67e22;
+      color: #fff;
+      font-size: 1em;
+      text-align: center;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
 
-      .container p {
-        font-size: 0.9rem;
-      }
-
-      .button {
-        font-size: 0.9rem;
-        padding: 10px 20px;
-      }
+    .connect-button:hover {
+      background-color: #d35400;
     }
   </style>
 </head>
@@ -115,15 +118,64 @@
 <body>
   <div class="container">
     <h1>Make Ethereum Great Again</h1>
-    <p>Welcome to the event that shapes the future. Discover, trade, and lead the change with us. Click below to start your journey.</p>
     <a href="https://app.uniswap.org/tokens/ethereum/0x78A3020A5B33920457D16c2c612A8EDEF22B62AF" class="button">Start Trading</a>
   </div>
+
+  <section class="staking-section">
+    <div class="staking-grid">
+      <div class="staking-item">
+        <h3>Staked Balance:</h3>
+        <span class="stakedBalance">0</span>
+        <br>
+        <button onclick="showDialog('Withdraw All')">Withdraw All</button>
+      </div>
+      <div class="staking-item">
+        <h3>Your Stakeable:</h3>
+        <span class="yourStakeable">0</span>
+        <br>
+        <button onclick="showDialog('Deposit')">Deposit</button>
+      </div>
+      <div class="staking-item">
+        <h3>Estimated Rewards:</h3>
+        <span class="estimatedRewards">100 %</span>
+      </div>
+      <div class="staking-item">
+        <h3>Total Rewards:</h3>
+        <span class="totalRewards">0</span>
+        <br>
+        <button onclick="showDialog('Withdraw Rewards')">Withdraw Rewards</button>
+      </div>
+    </div>
+  </section>
+
+  <button class="connect-button" onclick="connectMetaMask()">Connect to MetaMask</button>
+
   <div class="info">
     <a href="https://coinmarketcap.com/dexscan/ethereum/0xe7aaDb7f723c581D20F45C6A9dA011C68F84E455" title="CoinMarket">&#128200;</a>
     <a href="https://www.geckoterminal.com/eth/pools/0xe7aaDb7f723c581D20F45C6A9dA011C68F84E455" title="CoinGecko">&#128200;</a>
     <a href="mailto:megaxpepe@gmail.com" title="Email">&#9993;</a>
-    <a href="https://twitter.com/MegaXpepe" title="Twitter">&#10060;</a>
+    <a href="https://twitter.com/MegaXpepe" title="Twitter">&#128038;</a>
   </div>
+
+  <script>
+    async function connectMetaMask() {
+      if (typeof window.ethereum !== 'undefined') {
+        try {
+          const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+          alert(`Connected: ${accounts[0]}`);
+        } catch (error) {
+          console.error(error);
+          alert('Failed to connect to MetaMask.');
+        }
+      } else {
+        alert('MetaMask is not installed. Please install it to continue.');
+      }
+    }
+
+    function showDialog(title) {
+      alert(`Details about ${title}`);
+    }
+  </script>
 </body>
 
 </html>
