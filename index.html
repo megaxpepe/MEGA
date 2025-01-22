@@ -96,17 +96,26 @@
       color: #1abc9c;
     }
 
-    .connect-button {
-      display: block;
-      margin: 20px auto;
-      padding: 10px 20px;
+    .connect-button {  
+      position: fixed; 
+      top: 20px; 
+      right: 20px; 
+      padding: 10px 20px; 
       background-color: #e67e22;
       color: #fff;
-      font-size: 1em;
-      text-align: center;
+      font-size: 1.2em;
+      font-weight: bold;
+      text-align: center; 
       border: none;
-      border-radius: 5px;
+      border-radius: 10px;
+      box-shadow: 0 5px #c66b18;
       cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .connect-button:active {  
+      transform: translateY(5px); 
+      box-shadow: 0 2px #c66b18;
     }
 
     .connect-button:hover {
@@ -190,7 +199,7 @@
     </div>
   </section>
 
-  <button class="connect-button" onclick="connectMetaMask()">Connect to MetaMask</button>
+  <button class="connect-button" onclick="handleButtonClick()">Connect</button>
 
   <div class="info">
     <a href="https://coinmarketcap.com/dexscan/ethereum/0xe7aaDb7f723c581D20F45C6A9dA011C68F84E455" title="CoinMarket">&#128200;</a>
@@ -218,24 +227,47 @@
   </div>
 
   <script>
-    async function connectMetaMask() {
-      if (typeof window.ethereum !== 'undefined') {
-        try {
-          const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
-          alert(`Connected: ${accounts[0]}`);
-        } catch (error) {
-          console.error(error);
-          alert('Failed to connect to MetaMask.');
-        }
-      } else {
-        alert('MetaMask is not installed. Please install it to continue.');
-      }
-    }
+  // Initialize the address variable
+  let connectedAddress = null;
 
-    function showDialog(title) {
-      alert(`Details about ${title}`);
+  async function connectMetaMask() {
+    if (typeof window.ethereum !== 'undefined') {
+      try {
+        const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+        connectedAddress = accounts[0];
+        updateButton();
+      } catch (error) {
+        console.error(error);
+        alert('Failed to connect to MetaMask.');
+      }
+    } else {
+      alert('MetaMask is not installed. Please install it to continue.');
     }
+  }
+
+  function disconnectMetaMask() {
+    connectedAddress = null;
+    updateButton();
+  }
+
+  function handleButtonClick() {
+    if (connectedAddress === null) {
+      connectMetaMask();
+    } else {
+      disconnectMetaMask();
+    }
+  }
+
+  function updateButton() {
+    const button = document.getElementById('connect-button');
+    if (connectedAddress === null) {
+      button.textContent = 'Connect';
+    } else {
+      button.textContent = `${connectedAddress}`;
+    }
+  }
   </script>
+
 </body>
 
 </html>
