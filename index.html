@@ -269,7 +269,7 @@
         const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
         connectedAddress = accounts[0];
         updateButton();
-        updateBalance();
+        //updateBalance();
       } catch (error) {
         console.error(error);
         alert('Failed to connect to MetaMask.');
@@ -282,7 +282,7 @@
   function disconnectMetaMask() {
     connectedAddress = null;
     updateButton();
-    updateBalance();
+    //updateBalance();
   }
 
   function handleButtonClick() {
