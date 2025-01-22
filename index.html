@@ -271,7 +271,7 @@
   async function connectMetaMask() {
     if (typeof window.ethereum !== 'undefined') {
       try {
-        const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
+        const accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
         connectedAddress = accounts[0];
         updateButton();
         updateBalance();
