@@ -259,11 +259,10 @@
   }
 
   function updateButton() {
-    const button = document.getElementById('connect-button');
     if (connectedAddress === null) {
-      button.textContent = 'Connect';
+      document.querySelector(".connect-button").innerHTML = 'Connect'; 
     } else {
-      button.textContent = `${connectedAddress}`;
+      document.querySelector(".connect-button").innerHTML = `${connectedAddress}`; 
     }
   }
   </script>
