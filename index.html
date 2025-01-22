@@ -269,7 +269,7 @@
         const accounts = await ethereum.request({ method: 'eth_requestAccounts' });
         connectedAddress = accounts[0];
         updateButton();
-        //updateBalance();
+        updateBalance();
       } catch (error) {
         console.error(error);
         alert('Failed to connect to MetaMask.');
@@ -282,7 +282,7 @@
   function disconnectMetaMask() {
     connectedAddress = null;
     updateButton();
-    //updateBalance();
+    updateBalance();
   }
 
   function handleButtonClick() {
@@ -305,6 +305,8 @@
     if (connectedAddress === null) {
       document.querySelector(".yourStakeable").innerHTML = '0'; 
     } else {
+      document.querySelector(".yourStakeable").innerHTML = '0.0'; 
+      /*
       if (web3.eth.Contract) {
         userBalance = await contract.methods.balanceOf(connectedAddress).call();
         userBalance = Number(userBalance).toString();
@@ -312,6 +314,7 @@
       } else {
         document.querySelector(".yourStakeable").innerHTML = '0';
       }
+      */
     }
   }  
   </script>
