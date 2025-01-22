@@ -5,11 +5,6 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"
-    integrity="sha512-bLT0Qm9VnAYZDflyKcBaQ2gg0hSYNQrJ8RilYldYQ1FxQYoCLtUjuuRuZo+fjqhx/qtq/1itJ0C2ejDxltZVFg=="
-    crossorigin="anonymous"
-    referrerpolicy="no-referrer"
-  ></script>
   <script src="web3.min.js"></script>
   <title>Make Ethereum Great Again</title>
   <style>
@@ -226,6 +221,48 @@
   // Initialize the address variable
   let connectedAddress = null;
 
+  window.onload = async (event) => {
+    if (window.ethereum) {
+      window.web3 = new Web3(window.ethereum);
+      tokenContract = "0x78A3020A5B33920457D16c2c612A8EDEF22B62AF";
+      tokenABI = [
+        {"inputs":[{"internalType":"string","name":"name","type":"string"},
+        {"internalType":"string","name":"symbol","type":"string"},
+        {"internalType":"address","name":"vault","type":"address"}],"stateMutability":"nonpayable","type":"constructor"},
+        {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},
+        {"indexed":true,"internalType":"address","name":"spender","type":"address"},
+        {"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},
+        {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},
+        {"indexed":true,"internalType":"address","name":"to","type":"address"},
+        {"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},
+        {"inputs":[{"internalType":"address","name":"owner","type":"address"},
+        {"internalType":"address","name":"spender","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+        {"inputs":[{"internalType":"address","name":"spender","type":"address"},
+        {"internalType":"uint256","name":"amount","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},
+        {"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+        {"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"view","type":"function"},
+        {"inputs":[{"internalType":"address","name":"spender","type":"address"},
+        {"internalType":"uint256","name":"subtractedValue","type":"uint256"}],"name":"decreaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},
+        {"inputs":[{"internalType":"address","name":"spender","type":"address"},
+        {"internalType":"uint256","name":"addedValue","type":"uint256"}],"name":"increaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},
+        {"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},
+        {"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},
+        {"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+        {"inputs":[{"internalType":"address","name":"to","type":"address"},
+        {"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},
+        {"inputs":[{"internalType":"address","name":"from","type":"address"},
+        {"internalType":"address","name":"to","type":"address"},
+        {"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"}
+      ];
+
+      if (web3.eth.Contract) {
+        contract = new web3.eth.Contract(tokenABI, tokenContract);
+      } else {
+        alert("Please check contract instance");
+      }
+    }
+  }
+
   async function connectMetaMask() {
     if (typeof window.ethereum !== 'undefined') {
       try {
@@ -268,40 +305,7 @@
     if (connectedAddress === null) {
       document.querySelector(".yourStakeable").innerHTML = '0'; 
     } else {
-      window.web3 = new Web3(window.ethereum);
-      tokenContract = "0x78A3020A5B33920457D16c2c612A8EDEF22B62AF";
-      tokenABI = [
-        {"inputs":[{"internalType":"string","name":"name","type":"string"},
-        {"internalType":"string","name":"symbol","type":"string"},
-        {"internalType":"address","name":"vault","type":"address"}],"stateMutability":"nonpayable","type":"constructor"},
-        {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},
-        {"indexed":true,"internalType":"address","name":"spender","type":"address"},
-        {"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},
-        {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},
-        {"indexed":true,"internalType":"address","name":"to","type":"address"},
-        {"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},
-        {"inputs":[{"internalType":"address","name":"owner","type":"address"},
-        {"internalType":"address","name":"spender","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
-        {"inputs":[{"internalType":"address","name":"spender","type":"address"},
-        {"internalType":"uint256","name":"amount","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},
-        {"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
-        {"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"view","type":"function"},
-        {"inputs":[{"internalType":"address","name":"spender","type":"address"},
-        {"internalType":"uint256","name":"subtractedValue","type":"uint256"}],"name":"decreaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},
-        {"inputs":[{"internalType":"address","name":"spender","type":"address"},
-        {"internalType":"uint256","name":"addedValue","type":"uint256"}],"name":"increaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},
-        {"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},
-        {"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},
-        {"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
-        {"inputs":[{"internalType":"address","name":"to","type":"address"},
-        {"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},
-        {"inputs":[{"internalType":"address","name":"from","type":"address"},
-        {"internalType":"address","name":"to","type":"address"},
-        {"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"}
-      ];
-
       if (web3.eth.Contract) {
-        contract = new web3.eth.Contract(tokenABI, tokenContract);
         userBalance = await contract.methods.balanceOf(connectedAddress).call();
         userBalance = Number(userBalance).toString();
         document.querySelector(".yourStakeable").innerHTML = userBalance;
